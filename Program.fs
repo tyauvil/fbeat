@@ -3,6 +3,7 @@ open System
 open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Hosting
+open Microsoft.Extensions.Logging
 
 open Giraffe
 open Beats
@@ -17,12 +18,17 @@ let configureServices (services : IServiceCollection) =
     // Add Giraffe dependencies
     services.AddGiraffe() |> ignore
 
+let configureLogging (builder : ILoggingBuilder) =
+    // Set up the Console logger
+    builder.AddConsole() |> ignore
+
 [<EntryPoint>]
 let main _ =
     WebHostBuilder()
         .UseKestrel()
         .Configure(Action<IApplicationBuilder> configureApp)
         .ConfigureServices(configureServices)
+        .ConfigureLogging(configureLogging)
         .Build()
         .Run()
     0
