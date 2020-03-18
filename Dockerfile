@@ -1,4 +1,5 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build-env
+
 WORKDIR /app
 
 # Copy fsproj and restore as distinct layers
@@ -7,16 +8,16 @@ RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -r linux-musl-x64 -o out
+
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0
-WORKDIR /app
-COPY --from=build-env /app/out .
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.1-alpine
 
-COPY ./entrypoint.sh /entrypoint.sh
-ENV TINI_VERSION v0.18.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini /entrypoint.sh
+COPY --from=build-env /app/out/fsharp-beats /usr/local/bin/
+COPY ./entrypoint.sh /usr/local/bin/
 
-ENTRYPOINT ["/tini", "--", "/entrypoint.sh", "dotnet", "fsharp-beats.dll"]
+RUN apk add --no-cache tini &&\
+    chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["tini", "--", "entrypoint.sh", "fsharp-beats"]
