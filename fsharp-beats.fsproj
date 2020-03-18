@@ -5,9 +5,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateProgramFile>false</GenerateProgramFile>
     <PublishTrimmed>true</PublishTrimmed>
-    <PublishReadyToRun>false</PublishReadyToRun>
+    <!-- Not supported on Alpine <PublishReadyToRun>true</PublishReadyToRun> -->
     <PublishSingleFile>true</PublishSingleFile>
-    <CrossGenDuringPublish>false</CrossGenDuringPublish>
   </PropertyGroup>
 
   <ItemGroup>
