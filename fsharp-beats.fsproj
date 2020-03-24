@@ -6,7 +6,7 @@
     <GenerateProgramFile>false</GenerateProgramFile>
     <PublishTrimmed>true</PublishTrimmed>
     <!-- Not supported on Alpine <PublishReadyToRun>true</PublishReadyToRun> -->
-    <PublishSingleFile>true</PublishSingleFile>
+    <!-- Single exe with minimal runtime dependencies <PublishSingleFile>true</PublishSingleFile> -->
   </PropertyGroup>
 
   <ItemGroup>
