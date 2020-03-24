@@ -1,9 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateProgramFile>false</GenerateProgramFile>
+    <PublishTrimmed>true</PublishTrimmed>
+    <!-- Not supported on Alpine <PublishReadyToRun>true</PublishReadyToRun> -->
+    <!-- Single exe with minimal runtime dependencies <PublishSingleFile>true</PublishSingleFile> -->
   </PropertyGroup>
+
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.Globalization.Invariant" Value="true" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="Beats.fs" />
