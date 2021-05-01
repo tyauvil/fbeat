@@ -6,13 +6,12 @@ open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.Logging
 
 open Giraffe
-open Beats
 
 let webApp = 
     choose [
         GET >=> 
             choose [
-                route "/" >=> warbler (fun _ -> text (beats()))
+                route "/" >=> warbler (fun _ -> text (Beats.beats()))
                 route "/healthz" >=> Successful.ok (text "OK")
     ]
 ]
