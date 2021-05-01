@@ -1,27 +1,23 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
 
 WORKDIR /app
 
 # Copy fsproj and restore as distinct layers
-COPY *.fsproj ./
-RUN dotnet restore
+COPY fsharp-beats.fsproj ./
+RUN dotnet restore fsharp-beats.fsproj
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet publish -c Release -r linux-x64 -p:PublishReadyToRun=true -o out
+RUN dotnet publish fsharp-beats.fsproj -c Release -o out
 
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/runtime-deps:5.0-buster-slim
 
-WORKDIR /app
-COPY --from=build-env /app/out .
+ENV TINI_SUBREAPER=1
 
-# install tini to act as init 
-RUN apt-get update && apt-get install -y tini &&\
-    rm -rf /var/lib/apt/lists/*
-
+COPY --from=build-env /app/out/fsharp-beats /usr/local/bin/
 COPY ./entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
 
-ENTRYPOINT ["tini", "--", "entrypoint.sh", "dotnet", "fsharp-beats.dll"]
+ENTRYPOINT ["entrypoint.sh"]
+CMD ["fsharp-beats"]
