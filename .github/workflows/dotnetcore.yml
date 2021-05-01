@@ -12,6 +12,6 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.200'
+        dotnet-version: '5.0.x'
     - name: test
-      run: dotnet test --runtime linux-x64
+      run: dotnet test tests/fsharp-beats-test.fsproj --runtime linux-x64
