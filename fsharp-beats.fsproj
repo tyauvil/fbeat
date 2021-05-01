@@ -2,33 +2,22 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <GenerateProgramFile>false</GenerateProgramFile>
+    <TargetFramework>net5.0</TargetFramework>
     <PublishTrimmed>true</PublishTrimmed>
-    <!-- Not supported on Alpine <PublishReadyToRun>true</PublishReadyToRun> -->
-    <!-- Single exe with minimal runtime dependencies <PublishSingleFile>true</PublishSingleFile> -->
+    <SelfContained>true</SelfContained > 
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <PublishSingleFile>true</PublishSingleFile>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <RuntimeHostConfigurationOption Include="System.Globalization.Invariant" Value="true" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="Beats.fs" />
-    <Compile Include="BeatsTest.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Giraffe" Version="4.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
-    <PackageReference Include="FsUnit.xUnit" Version="3.4.1" />
-    <PackageReference Include="coverlet.collector" Version="1.0.1" />
+    <PackageReference Include="Giraffe" Version="5.0.0-rc-6" />
   </ItemGroup>
 
 </Project>
