@@ -3,15 +3,10 @@ module Beats
 open System
 
 let beats() =
-    let utc = 
-        (DateTime.UtcNow.AddHours(1.0).TimeOfDay.TotalSeconds
-        |> float) * 0.011_574 
-        |> int
-
-
-    let prefix = match utc with
-                 | i when i < 10 -> "00"
-                 | i when i < 100 -> "0"
-                 | _ -> ""
+    //  Biel Mean Time is UTC+1 and does not observe DST
+    let bmt = DateTime.UtcNow.AddHours(1.0)
+    // Convert customary seconds to decimal minutes
+    let decimalMinute = bmt.TimeOfDay.TotalSeconds * 0.011_574 |> int
     
-    sprintf "@%s%i.beats" prefix utc
+    // zero pad the three digit representation
+    sprintf "@%03i.beats" decimalMinute
