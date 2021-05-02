@@ -2,3 +2,6 @@ bin/*
 obj/*
 .github/*
 .ionide/*
+tests/
+LICENSE
+README.md
