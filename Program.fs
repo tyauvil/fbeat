@@ -11,7 +11,8 @@ let webApp =
     choose [
         GET >=> 
             choose [
-                route "/" >=> warbler (fun _ -> text (Beats.beats()))
+                route "/" >=> warbler (fun _ -> json (Beats.beatsText()))
+                route "/json" >=> warbler (fun _ -> json (Beats.beatsJson()))
                 route "/healthz" >=> Successful.ok (text "OK")
     ]
 ]
