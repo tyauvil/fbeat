@@ -8,4 +8,4 @@ open Beats
 
 [<Fact>]
 let ``test beats format``() = 
-    Regex.IsMatch(beats(), @"@\d{3}.beats") |> should equal true
+    Regex.IsMatch(beatsText(), @"@\d{3}.beats") |> should equal true
